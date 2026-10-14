@@ -8,11 +8,15 @@ import {
   TextInput,
   View,
 } from "react-native";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
+import type { RootStackParamList } from "../navigation/types";
 import { colors } from "../theme/colors";
 import { styles } from "./LoginScreen.styles";
 
-export default function LoginScreen() {
+type Props = NativeStackScreenProps<RootStackParamList, "Login">;
+
+export default function LoginScreen({ navigation }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -27,15 +31,15 @@ export default function LoginScreen() {
     }
 
     if (
-      normalizedEmail !== "teste@cinelist.com" ||
-      password !== "123456"
+      normalizedEmail !== "b" ||
+      password !== "1"
     ) {
       setError("E-mail ou senha incorretos.");
       return;
     }
 
     setError("");
-    console.log("Login realizado com sucesso!");
+    navigation.replace("Home");
   }
 
   return (
@@ -107,7 +111,6 @@ export default function LoginScreen() {
             <Text style={styles.buttonText}>Entrar</Text>
           </Pressable>
         </View>
-      
       </View>
     </KeyboardAvoidingView>
   );
