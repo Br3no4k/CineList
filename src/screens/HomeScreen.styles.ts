@@ -90,4 +90,24 @@ export const styles = StyleSheet.create({
   movieList: {
     paddingHorizontal: spacing.lg,
   },
+  headerTop: {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  marginBottom: spacing.sm,
+},
+
+favoritesButton: {
+  width: 44,
+  height: 44,
+  borderRadius: 22,
+  backgroundColor: colors.surface,
+  alignItems: "center",
+  justifyContent: "center",
+},
+
+favoritesIcon: {
+  color: colors.primary,
+  fontSize: 30,
+},
 });

@@ -1,6 +1,8 @@
 import { FlatList, Image, ScrollView, Text, View, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useNavigation, CompositeNavigationProp } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import type { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
 import MovieCard from "../components/MovieCard";
 import {
@@ -9,12 +11,17 @@ import {
   getPopularMovies,
 } from "../services/movieService";
 import type { Movie } from "../models/Movie";
-import type { RootStackParamList } from "../navigation/types";
+import type { RootStackParamList, MainTabParamList } from "../navigation/types";
 import { styles } from "./HomeScreen.styles";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Home">;
+type HomeNavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<MainTabParamList, "Home">,
+  NativeStackNavigationProp<RootStackParamList>
+>;
 
-export default function HomeScreen({ navigation }: Props) {
+export default function HomeScreen() {
+  const navigation = useNavigation<HomeNavigationProp>();
+
   const featuredMovie = getFeaturedMovie();
   const allMovies = getMovies();
   const popularMovies = getPopularMovies();
@@ -39,8 +46,10 @@ export default function HomeScreen({ navigation }: Props) {
           </Text>
         </View>
 
-        <Pressable style={styles.featured} onPress={() => handleMoviePress(featuredMovie)}>
-        
+        <Pressable
+          style={styles.featured}
+          onPress={() => handleMoviePress(featuredMovie)}
+        >
           <Text style={styles.featuredLabel}>
             Destaque do catálogo
           </Text>

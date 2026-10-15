@@ -39,7 +39,7 @@ export default function LoginScreen({ navigation }: Props) {
     }
 
     setError("");
-    navigation.replace("Home");
+    navigation.replace("MainTabs");
   }
 
   return (

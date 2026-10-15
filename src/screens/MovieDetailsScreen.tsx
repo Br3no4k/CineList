@@ -3,6 +3,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import type { RootStackParamList } from "../navigation/types";
 import { getMovies } from "../services/movieService";
+import { useFavorites } from "../contexts/FavoritesContext";
 import { styles } from "./MovieDetailsScreen.styles";
 
 type Props = NativeStackScreenProps<RootStackParamList, "MovieDetails">;
@@ -10,19 +11,27 @@ type Props = NativeStackScreenProps<RootStackParamList, "MovieDetails">;
 export default function MovieDetailsScreen({ navigation, route }: Props) {
   const { movieId } = route.params;
   const movie = getMovies().find((item) => item.id === movieId);
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   if (!movie) {
     return (
       <View style={styles.container}>
-        <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Pressable
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+          accessibilityLabel="Voltar"
+        >
           <Text style={styles.backButtonText}>←</Text>
         </Pressable>
+
         <View style={styles.info}>
           <Text style={styles.title}>Filme não encontrado</Text>
         </View>
       </View>
     );
   }
+
+  const favorite = isFavorite(movie.id);
 
   return (
     <ScrollView
@@ -47,7 +56,23 @@ export default function MovieDetailsScreen({ navigation, route }: Props) {
       </View>
 
       <View style={styles.info}>
-        <Text style={styles.title}>{movie.title}</Text>
+        <View style={styles.titleRow}>
+          <Text style={styles.title} numberOfLines={3}>
+            {movie.title}
+          </Text>
+
+          <Pressable
+            style={styles.favoriteButton}
+            onPress={() => toggleFavorite(movie.id)}
+            accessibilityLabel={
+              favorite ? "Remover dos favoritos" : "Adicionar aos favoritos"
+            }
+          >
+            <Text style={styles.favoriteIcon}>
+              {favorite ? "♥" : "♡"}
+            </Text>
+          </Pressable>
+        </View>
 
         <Text style={styles.metadata}>
           {movie.year} · {movie.genre} · Nota {movie.rating.toFixed(1)}
