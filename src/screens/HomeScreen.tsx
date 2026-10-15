@@ -1,12 +1,6 @@
-
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, Image, ScrollView, Text, View, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import MovieCard from "../components/MovieCard";
 import {
@@ -15,15 +9,20 @@ import {
   getPopularMovies,
 } from "../services/movieService";
 import type { Movie } from "../models/Movie";
+import type { RootStackParamList } from "../navigation/types";
 import { styles } from "./HomeScreen.styles";
 
-export default function HomeScreen() {
+type Props = NativeStackScreenProps<RootStackParamList, "Home">;
+
+export default function HomeScreen({ navigation }: Props) {
   const featuredMovie = getFeaturedMovie();
   const allMovies = getMovies();
   const popularMovies = getPopularMovies();
 
   function handleMoviePress(movie: Movie) {
-    console.log("Filme selecionado:", movie.title);
+    navigation.navigate("MovieDetails", {
+      movieId: movie.id,
+    });
   }
 
   return (
@@ -40,7 +39,8 @@ export default function HomeScreen() {
           </Text>
         </View>
 
-        <View style={styles.featured}>
+        <Pressable style={styles.featured} onPress={() => handleMoviePress(featuredMovie)}>
+        
           <Text style={styles.featuredLabel}>
             Destaque do catálogo
           </Text>
@@ -63,7 +63,7 @@ export default function HomeScreen() {
             {featuredMovie.year} | Nota{" "}
             {featuredMovie.rating.toFixed(1)}
           </Text>
-        </View>
+        </Pressable>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>
