@@ -1,17 +1,24 @@
 
 import { Image, Pressable, Text, View } from "react-native";
+import type { StyleProp, ViewStyle } from "react-native";
+
 import type { Movie } from "../models/Movie";
 import { styles } from "./MovieCard.styles";
 
 type Props = {
   movie: Movie;
   onPress?: (movie: Movie) => void;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
-export default function MovieCard({ movie, onPress }: Props) {
+export default function MovieCard({
+  movie,
+  onPress,
+  containerStyle,
+}: Props) {
   return (
     <Pressable
-      style={styles.container}
+      style={[styles.container, containerStyle]}
       onPress={() => onPress?.(movie)}
     >
       <Image

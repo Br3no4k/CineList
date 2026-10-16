@@ -1,17 +1,19 @@
 
 import { StyleSheet } from "react-native";
+
 import { colors } from "../theme/colors";
 import { spacing } from "../theme/spacing";
 
 export const styles = StyleSheet.create({
   container: {
     width: 150,
+    maxWidth: "100%",
     marginRight: spacing.md,
   },
 
   poster: {
     width: "100%",
-    height: 220,
+    aspectRatio: 2 / 3,
     borderRadius: 10,
     backgroundColor: colors.surface,
   },

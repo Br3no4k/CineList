@@ -1,17 +1,30 @@
+
 import { FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import {
+  useNavigation,
+  CompositeNavigationProp,
+} from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import type { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
 import MovieCard from "../components/MovieCard";
 import { getMovies } from "../services/movieService";
 import { useFavorites } from "../contexts/FavoritesContext";
 import type { Movie } from "../models/Movie";
-import type { RootStackParamList } from "../navigation/types";
+import type {
+  RootStackParamList,
+  MainTabParamList,
+} from "../navigation/types";
 import { styles } from "./FavoritesScreen.styles";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Favorites">;
+type FavoritesNavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<MainTabParamList, "Favorites">,
+  NativeStackNavigationProp<RootStackParamList>
+>;
 
-export default function FavoritesScreen({ navigation }: Props) {
+export default function FavoritesScreen() {
+  const navigation = useNavigation<FavoritesNavigationProp>();
   const { favoriteIds } = useFavorites();
 
   const favoriteMovies = getMovies().filter((movie) =>
@@ -29,7 +42,10 @@ export default function FavoritesScreen({ navigation }: Props) {
 
         {favoriteMovies.length === 0 ? (
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyTitle}>Nenhum favorito ainda</Text>
+            <Text style={styles.emptyTitle}>
+              Nenhum favorito ainda
+            </Text>
+
             <Text style={styles.emptyDescription}>
               Abra os detalhes de um filme e toque no coração para salvá-lo aqui.
             </Text>
@@ -42,7 +58,14 @@ export default function FavoritesScreen({ navigation }: Props) {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <View style={styles.movieItem}>
-                <MovieCard movie={item} onPress={handleMoviePress} />
+                <MovieCard
+                  movie={item}
+                  onPress={handleMoviePress}
+                  containerStyle={{
+                    width: "100%",
+                    marginRight: 0,
+                  }}
+                />
               </View>
             )}
             showsVerticalScrollIndicator={false}
