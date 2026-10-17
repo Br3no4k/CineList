@@ -1,3 +1,4 @@
+
 import { StyleSheet } from "react-native";
 
 import { colors } from "../theme/colors";
@@ -56,5 +57,51 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 21,
     textAlign: "center",
+  },
+
+  searchHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+  },
+
+  searchArea: {
+    flex: 1,
+    minWidth: 0,
+  },
+
+  searchInput: {
+    height: 48,
+    backgroundColor: colors.surface,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
+    color: colors.text,
+    paddingHorizontal: spacing.md,
+    fontSize: 15,
+    marginBottom: spacing.lg,
+  },
+
+  backButton: {
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  backButtonText: {
+    color: colors.text,
+    fontSize: 32,
+  },
+
+  sectionTitle: {
+    color: colors.text,
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: spacing.md,
+  },
+
+  resultsList: {
+    flex: 1,
   },
 });

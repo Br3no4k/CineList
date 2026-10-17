@@ -1,5 +1,4 @@
 
-import { useMemo, useState } from "react";
 import {
   FlatList,
   Text,
@@ -17,7 +16,8 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
 import MovieCard from "../components/MovieCard";
-import { getMovies } from "../services/movieService";
+import ScreenHeader from "../components/ScreenHeader";
+import useExploreViewModel from "../viewmodels/useExploreViewModel";
 import type { Movie } from "../models/Movie";
 import type {
   RootStackParamList,
@@ -33,39 +33,26 @@ type ExploreNavigationProp = CompositeNavigationProp<
 
 export default function ExploreScreen() {
   const navigation = useNavigation<ExploreNavigationProp>();
-  const [search, setSearch] = useState("");
-  const [selectedGenre, setSelectedGenre] = useState("Todos");
-  const [searchActive, setSearchActive] = useState(false);
 
-  const movies = getMovies();
-
-  const genres = useMemo(
-    () => [
-      "Todos",
-      ...Array.from(new Set(movies.map((movie) => movie.genre))),
-    ],
-    [movies]
-  );
-
-  const filteredMovies = movies.filter((movie) => {
-    const matchesTitle = movie.title
-      .toLowerCase()
-      .includes(search.trim().toLowerCase());
-
-    const matchesGenre =
-      selectedGenre === "Todos" || movie.genre === selectedGenre;
-
-    return matchesTitle && matchesGenre;
-  });
+  const {
+    search,
+    setSearch,
+    selectedGenre,
+    setSelectedGenre,
+    searchActive,
+    setSearchActive,
+    genres,
+    filteredMovies,
+    closeSearch,
+  } = useExploreViewModel();
 
   function handleMoviePress(movie: Movie) {
     Keyboard.dismiss();
     navigation.navigate("MovieDetails", { movieId: movie.id });
   }
 
-  function closeSearch() {
-    setSearchActive(false);
-    setSearch("");
+  function handleCloseSearch() {
+    closeSearch();
     Keyboard.dismiss();
   }
 
@@ -75,7 +62,7 @@ export default function ExploreScreen() {
         <View style={styles.searchHeader}>
           {searchActive && (
             <Pressable
-              onPress={closeSearch}
+              onPress={handleCloseSearch}
               style={styles.backButton}
               accessibilityLabel="Sair da pesquisa"
             >
@@ -85,12 +72,10 @@ export default function ExploreScreen() {
 
           <View style={styles.searchArea}>
             {!searchActive && (
-              <>
-                <Text style={styles.title}>Explorar</Text>
-                <Text style={styles.subtitle}>
-                  Encontre seu próximo filme favorito.
-                </Text>
-              </>
+              <ScreenHeader
+                title="Explorar"
+                subtitle="Encontre seu próximo filme favorito."
+              />
             )}
 
             <TextInput
