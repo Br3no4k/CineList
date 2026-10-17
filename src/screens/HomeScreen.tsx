@@ -1,17 +1,27 @@
-import { FlatList, Image, ScrollView, Text, View, Pressable } from "react-native";
+
+import {
+  FlatList,
+  Image,
+  ScrollView,
+  Text,
+  View,
+  Pressable,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation, CompositeNavigationProp } from "@react-navigation/native";
+import {
+  useNavigation,
+  CompositeNavigationProp,
+} from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
 import MovieCard from "../components/MovieCard";
-import {
-  getFeaturedMovie,
-  getMovies,
-  getPopularMovies,
-} from "../services/movieService";
+import useHomeViewModel from "../viewmodels/useHomeViewModel";
 import type { Movie } from "../models/Movie";
-import type { RootStackParamList, MainTabParamList } from "../navigation/types";
+import type {
+  RootStackParamList,
+  MainTabParamList,
+} from "../navigation/types";
 import { styles } from "./HomeScreen.styles";
 
 type HomeNavigationProp = CompositeNavigationProp<
@@ -22,9 +32,11 @@ type HomeNavigationProp = CompositeNavigationProp<
 export default function HomeScreen() {
   const navigation = useNavigation<HomeNavigationProp>();
 
-  const featuredMovie = getFeaturedMovie();
-  const allMovies = getMovies();
-  const popularMovies = getPopularMovies();
+  const {
+    featuredMovie,
+    allMovies,
+    popularMovies,
+  } = useHomeViewModel();
 
   function handleMoviePress(movie: Movie) {
     navigation.navigate("MovieDetails", {

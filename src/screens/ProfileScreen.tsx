@@ -1,12 +1,12 @@
 
 import { Alert, Pressable, ScrollView, Text, View } from "react-native";
-import { CommonActions, useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { styles } from "./ProfileScreen.styles";
+import useProfileViewModel from "../viewmodels/useProfileViewModel";
 
 export default function ProfileScreen() {
-  const navigation = useNavigation();
+  const { logout } = useProfileViewModel();
 
   function handleLogout() {
     Alert.alert(
@@ -20,14 +20,7 @@ export default function ProfileScreen() {
         {
           text: "Sair",
           style: "destructive",
-          onPress: () => {
-            navigation.getParent()?.dispatch(
-              CommonActions.reset({
-                index: 0,
-                routes: [{ name: "Login" }],
-              })
-            );
-          },
+          onPress: logout,
         },
       ]
     );
@@ -48,7 +41,6 @@ export default function ProfileScreen() {
           </View>
 
           <Text style={styles.name}>Usuário CineList</Text>
-
           <Text style={styles.email}>teste@cinelist.com</Text>
 
           <View style={styles.accountBadge}>

@@ -1,17 +1,21 @@
+
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import type { RootStackParamList } from "../navigation/types";
-import { getMovies } from "../services/movieService";
-import { useFavorites } from "../contexts/FavoritesContext";
+import useMovieDetailsViewModel from "../viewmodels/useMovieDetailsViewModel";
 import { styles } from "./MovieDetailsScreen.styles";
 
 type Props = NativeStackScreenProps<RootStackParamList, "MovieDetails">;
 
 export default function MovieDetailsScreen({ navigation, route }: Props) {
   const { movieId } = route.params;
-  const movie = getMovies().find((item) => item.id === movieId);
-  const { isFavorite, toggleFavorite } = useFavorites();
+
+  const {
+    movie,
+    favorite,
+    handleToggleFavorite,
+  } = useMovieDetailsViewModel(movieId);
 
   if (!movie) {
     return (
@@ -30,8 +34,6 @@ export default function MovieDetailsScreen({ navigation, route }: Props) {
       </View>
     );
   }
-
-  const favorite = isFavorite(movie.id);
 
   return (
     <ScrollView
@@ -63,9 +65,11 @@ export default function MovieDetailsScreen({ navigation, route }: Props) {
 
           <Pressable
             style={styles.favoriteButton}
-            onPress={() => toggleFavorite(movie.id)}
+            onPress={handleToggleFavorite}
             accessibilityLabel={
-              favorite ? "Remover dos favoritos" : "Adicionar aos favoritos"
+              favorite
+                ? "Remover dos favoritos"
+                : "Adicionar aos favoritos"
             }
           >
             <Text style={styles.favoriteIcon}>

@@ -1,5 +1,4 @@
 
-import { useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -13,33 +12,28 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../navigation/types";
 import { colors } from "../theme/colors";
 import { styles } from "./LoginScreen.styles";
+import useLoginViewModel from "../viewmodels/useLoginViewModel";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
 export default function LoginScreen({ navigation }: Props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    showPassword,
+    setShowPassword,
+    error,
+    handleLogin,
+  } = useLoginViewModel();
 
-  function handleLogin() {
-    const normalizedEmail = email.trim().toLowerCase();
+  function handleSubmit() {
+    const success = handleLogin();
 
-    if (!normalizedEmail || !password) {
-      setError("Preencha o e-mail e a senha.");
-      return;
+    if (success) {
+      navigation.replace("MainTabs");
     }
-
-    if (
-      normalizedEmail !== "b" ||
-      password !== "1"
-    ) {
-      setError("E-mail ou senha incorretos.");
-      return;
-    }
-
-    setError("");
-    navigation.replace("MainTabs");
   }
 
   return (
@@ -85,7 +79,7 @@ export default function LoginScreen({ navigation }: Props) {
                 onChangeText={setPassword}
                 secureTextEntry={!showPassword}
                 autoCapitalize="none"
-                onSubmitEditing={handleLogin}
+                onSubmitEditing={handleSubmit}
                 returnKeyType="done"
               />
 
@@ -106,7 +100,7 @@ export default function LoginScreen({ navigation }: Props) {
 
           <Pressable
             style={styles.button}
-            onPress={handleLogin}
+            onPress={handleSubmit}
           >
             <Text style={styles.buttonText}>Entrar</Text>
           </Pressable>
