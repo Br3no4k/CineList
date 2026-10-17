@@ -21,7 +21,7 @@ import EmptyState from "../components/EmptyState";
 import useFavoritesViewModel from "../viewmodels/useFavoritesViewModel";
 import type { Movie } from "../models/Movie";
 import type {
-  RootStackParamList,
+  MainStackParamList,
   MainTabParamList,
 } from "../navigation/types";
 import { colors } from "../theme/colors";
@@ -29,7 +29,7 @@ import { styles } from "./FavoritesScreen.styles";
 
 type FavoritesNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<MainTabParamList, "Favorites">,
-  NativeStackNavigationProp<RootStackParamList>
+  NativeStackNavigationProp<MainStackParamList>
 >;
 
 export default function FavoritesScreen() {

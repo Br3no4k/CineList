@@ -2,11 +2,14 @@
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-import type { RootStackParamList } from "../navigation/types";
+import type { MainStackParamList } from "../navigation/types";
 import useMovieDetailsViewModel from "../viewmodels/useMovieDetailsViewModel";
 import { styles } from "./MovieDetailsScreen.styles";
 
-type Props = NativeStackScreenProps<RootStackParamList, "MovieDetails">;
+type Props = NativeStackScreenProps<
+  MainStackParamList,
+  "MovieDetails"
+>;
 
 export default function MovieDetailsScreen({ navigation, route }: Props) {
   const { movieId } = route.params;

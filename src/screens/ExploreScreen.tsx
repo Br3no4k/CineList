@@ -20,7 +20,7 @@ import ScreenHeader from "../components/ScreenHeader";
 import useExploreViewModel from "../viewmodels/useExploreViewModel";
 import type { Movie } from "../models/Movie";
 import type {
-  RootStackParamList,
+  MainStackParamList,
   MainTabParamList,
 } from "../navigation/types";
 import { colors } from "../theme/colors";
@@ -28,7 +28,7 @@ import { styles } from "./ExploreScreen.styles";
 
 type ExploreNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<MainTabParamList, "Explore">,
-  NativeStackNavigationProp<RootStackParamList>
+  NativeStackNavigationProp<MainStackParamList>
 >;
 
 export default function ExploreScreen() {

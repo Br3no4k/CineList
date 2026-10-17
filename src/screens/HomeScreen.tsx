@@ -19,14 +19,14 @@ import MovieCard from "../components/MovieCard";
 import useHomeViewModel from "../viewmodels/useHomeViewModel";
 import type { Movie } from "../models/Movie";
 import type {
-  RootStackParamList,
+  MainStackParamList,
   MainTabParamList,
 } from "../navigation/types";
 import { styles } from "./HomeScreen.styles";
 
 type HomeNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<MainTabParamList, "Home">,
-  NativeStackNavigationProp<RootStackParamList>
+  NativeStackNavigationProp<MainStackParamList>
 >;
 
 export default function HomeScreen() {
