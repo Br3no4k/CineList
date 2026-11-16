@@ -11,7 +11,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import type { RootStackParamList } from "../navigation/types";
 import { colors } from "../theme/colors";
-import { styles } from "./LoginScreen.styles";
+import { styles } from "../styles/screens/LoginScreen.styles";
 import useLoginViewModel from "../viewmodels/useLoginViewModel";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;

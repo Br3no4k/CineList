@@ -1,13 +1,13 @@
 
 import { StyleSheet } from "react-native";
 
-import { colors } from "../theme/colors";
-import { spacing } from "../theme/spacing";
+import { commonStyles } from "../common";
+import { colors } from "../../theme/colors";
+import { spacing } from "../../theme/spacing";
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: colors.background,
+    ...commonStyles.screenContainer,
   },
 
   content: {
@@ -16,16 +16,8 @@ export const styles = StyleSheet.create({
     paddingTop: spacing.lg,
   },
 
-  searchHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.sm,
-  },
-
-  searchArea: {
-    flex: 1,
-    minWidth: 0,
-  },
+  searchHeader: commonStyles.searchHeader,
+  searchArea: commonStyles.searchArea,
 
   title: {
     color: colors.text,
@@ -40,36 +32,10 @@ export const styles = StyleSheet.create({
     marginBottom: spacing.lg,
   },
 
-  searchInput: {
-    height: 48,
-    backgroundColor: colors.surface,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.border,
-    color: colors.text,
-    paddingHorizontal: spacing.md,
-    fontSize: 15,
-    marginBottom: spacing.lg,
-  },
-
-  backButton: {
-    width: 40,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  backButtonText: {
-    color: colors.text,
-    fontSize: 32,
-  },
-
-  sectionTitle: {
-    color: colors.text,
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: spacing.md,
-  },
+  searchInput: commonStyles.searchInput,
+  backButton: commonStyles.backButton,
+  backButtonText: commonStyles.backButtonText,
+  sectionTitle: commonStyles.sectionTitle,
 
   genreContainer: {
     height: 60,
@@ -111,23 +77,12 @@ export const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
 
-  resultsList: {
-    flex: 1,
-  },
+  resultsList: commonStyles.resultsList,
 
-  movieList: {
-    paddingBottom: spacing.xl,
-  },
+  movieList: commonStyles.movieList,
 
-  movieRow: {
-    justifyContent: "space-between",
-    marginBottom: spacing.md,
-  },
-
-  movieItem: {
-    width: "48%",
-    minWidth: 0,
-  },
+  movieRow: commonStyles.movieRow,
+  movieItem: commonStyles.movieItem,
 
   emptyText: {
     color: colors.textSecondary,

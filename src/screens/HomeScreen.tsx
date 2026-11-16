@@ -22,7 +22,7 @@ import type {
   MainStackParamList,
   MainTabParamList,
 } from "../navigation/types";
-import { styles } from "./HomeScreen.styles";
+import { styles } from "../styles/screens/HomeScreen.styles";
 
 type HomeNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<MainTabParamList, "Home">,

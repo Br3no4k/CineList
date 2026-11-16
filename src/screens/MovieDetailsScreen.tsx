@@ -4,7 +4,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import type { MainStackParamList } from "../navigation/types";
 import useMovieDetailsViewModel from "../viewmodels/useMovieDetailsViewModel";
-import { styles } from "./MovieDetailsScreen.styles";
+import { styles } from "../styles/screens/MovieDetailsScreen.styles";
 
 type Props = NativeStackScreenProps<
   MainStackParamList,

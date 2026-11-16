@@ -4,7 +4,7 @@ import { ActivityIndicator, Text, View } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { colors } from "../theme/colors";
-import { styles } from "./SplashScreen.styles";
+import { styles } from "../styles/screens/SplashScreen.styles";
 import type { RootStackParamList } from "../navigation/types";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Splash">;

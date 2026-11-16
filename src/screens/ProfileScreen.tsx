@@ -2,7 +2,7 @@
 import { Alert, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { styles } from "./ProfileScreen.styles";
+import { styles } from "../styles/screens/ProfileScreen.styles";
 import useProfileViewModel from "../viewmodels/useProfileViewModel";
 
 export default function ProfileScreen() {

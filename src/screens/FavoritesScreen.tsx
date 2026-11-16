@@ -25,7 +25,7 @@ import type {
   MainTabParamList,
 } from "../navigation/types";
 import { colors } from "../theme/colors";
-import { styles } from "./FavoritesScreen.styles";
+import { styles } from "../styles/screens/FavoritesScreen.styles";
 
 type FavoritesNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<MainTabParamList, "Favorites">,

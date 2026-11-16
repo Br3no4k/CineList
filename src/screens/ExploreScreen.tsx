@@ -24,7 +24,7 @@ import type {
   MainTabParamList,
 } from "../navigation/types";
 import { colors } from "../theme/colors";
-import { styles } from "./ExploreScreen.styles";
+import { styles } from "../styles/screens/ExploreScreen.styles";
 
 type ExploreNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<MainTabParamList, "Explore">,
