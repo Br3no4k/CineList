@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
   content: {
     paddingHorizontal: spacing.md,
     paddingTop: spacing.lg,
-   paddingBottom: spacing.xl,
+    paddingBottom: spacing.xl,
   },
 
   headerTitle: {
@@ -37,20 +37,51 @@ export const styles = StyleSheet.create({
     marginBottom: spacing.xl,
   },
 
+  avatarContainer: {
+    alignItems: "center",
+    marginBottom: spacing.md,
+  },
+
   avatar: {
-    width: 84,
-    height: 84,
-    borderRadius: 42,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     backgroundColor: colors.primary,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: spacing.md,
+    overflow: "hidden",
+  },
+
+  avatarImage: {
+    width: "100%",
+    height: "100%",
   },
 
   avatarText: {
     color: colors.text,
     fontSize: 36,
     fontWeight: "bold",
+  },
+
+  photoButton: {
+    marginTop: spacing.sm,
+    padding: spacing.xs,
+  },
+
+  photoButtonText: {
+    color: colors.primary,
+    fontSize: 13,
+    fontWeight: "600",
+  },
+
+  removePhotoButton: {
+    marginTop: spacing.xs,
+    padding: spacing.xs,
+  },
+
+  removePhotoText: {
+    color: colors.textSecondary,
+    fontSize: 12,
   },
 
   name: {
