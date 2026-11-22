@@ -3,6 +3,12 @@ import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import {
+  getFavoriteIds,
+  addFavorite,
+  removeFavorite,
+} from "../services/favoritesService";
+
 type FavoritesContextData = {
   favoriteIds: string[];
   toggleFavorite: (movieId: string) => void;
@@ -18,6 +24,7 @@ type Props = {
 };
 
 const FAVORITES_STORAGE_KEY = "@cinelist:favoriteIds";
+const MIGRATION_KEY = "@cinelist:favoritesMigrated";
 
 export function FavoritesProvider({ children }: Props) {
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
@@ -26,15 +33,36 @@ export function FavoritesProvider({ children }: Props) {
   useEffect(() => {
     async function loadFavorites() {
       try {
-        const storedFavorites = await AsyncStorage.getItem(
-          FAVORITES_STORAGE_KEY
+        const migrationCompleted = await AsyncStorage.getItem(
+          MIGRATION_KEY
         );
 
-        if (storedFavorites) {
-          setFavoriteIds(JSON.parse(storedFavorites));
+        if (migrationCompleted !== "true") {
+          const storedFavorites = await AsyncStorage.getItem(
+            FAVORITES_STORAGE_KEY
+          );
+
+          if (storedFavorites) {
+            const parsedFavorites: unknown = JSON.parse(storedFavorites);
+
+            if (
+              Array.isArray(parsedFavorites) &&
+              parsedFavorites.every((id) => typeof id === "string")
+            ) {
+              parsedFavorites.forEach((movieId: string) => {
+                addFavorite(movieId);
+              });
+            }
+          }
+
+          await AsyncStorage.setItem(MIGRATION_KEY, "true");
+          await AsyncStorage.removeItem(FAVORITES_STORAGE_KEY);
         }
+
+        setFavoriteIds(getFavoriteIds());
       } catch (error) {
         console.error("Erro ao carregar favoritos:", error);
+        setFavoriteIds(getFavoriteIds());
       } finally {
         setIsLoading(false);
       }
@@ -43,29 +71,16 @@ export function FavoritesProvider({ children }: Props) {
     loadFavorites();
   }, []);
 
-  useEffect(() => {
-    async function saveFavorites() {
-      if (isLoading) return;
+  function toggleFavorite(movieId: string) {
+    if (isLoading) return;
 
-      try {
-        await AsyncStorage.setItem(
-          FAVORITES_STORAGE_KEY,
-          JSON.stringify(favoriteIds)
-        );
-      } catch (error) {
-        console.error("Erro ao salvar favoritos:", error);
-      }
+    if (favoriteIds.includes(movieId)) {
+      removeFavorite(movieId);
+    } else {
+      addFavorite(movieId);
     }
 
-    saveFavorites();
-  }, [favoriteIds, isLoading]);
-
-  function toggleFavorite(movieId: string) {
-    setFavoriteIds((currentIds) =>
-      currentIds.includes(movieId)
-        ? currentIds.filter((id) => id !== movieId)
-        : [...currentIds, movieId]
-    );
+    setFavoriteIds(getFavoriteIds());
   }
 
   function isFavorite(movieId: string) {
