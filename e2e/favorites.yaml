@@ -1,0 +1,40 @@
+
+appId: com.brenoak.cinelist
+---
+- launchApp:
+    clearState: true
+
+# Aguarda a tela inicial
+- waitForAnimationToEnd:
+    timeout: 10000
+
+- extendedWaitUntil:
+    visible: "Digite seu e-mail"
+    timeout: 15000
+
+# Login
+- tapOn: "Digite seu e-mail"
+- inputText: "b"
+
+- tapOn: "Digite sua senha"
+- inputText: "1"
+
+- tapOn: "Entrar"
+
+# Abre Interestelar
+- assertVisible: "Descubra seu próximo filme favorito."
+- tapOn: "Interestelar"
+
+# Adiciona aos favoritos
+- assertVisible: "Sinopse"
+- tapOn: "Adicionar aos favoritos"
+- assertVisible: "Remover dos favoritos"
+
+# Volta para a lista
+- tapOn:
+    text: "Voltar"
+
+# Abre os favoritos
+- tapOn: "Favoritos"
+- assertVisible: "Meus favoritos"
+- assertVisible: "Interestelar"

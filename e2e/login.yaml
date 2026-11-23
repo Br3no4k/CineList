@@ -1,0 +1,25 @@
+
+appId: com.brenoak.cinelist
+---
+- launchApp
+
+- waitForAnimationToEnd:
+    timeout: 10000
+
+- extendedWaitUntil:
+    visible: "CineList"
+    timeout: 15000
+
+- extendedWaitUntil:
+    visible: "Digite seu e-mail"
+    timeout: 15000
+
+- tapOn: "Digite seu e-mail"
+- inputText: "b"
+
+- tapOn: "Digite sua senha"
+- inputText: "1"
+
+- tapOn: "Entrar"
+
+- assertVisible: "Descubra seu próximo filme favorito."
